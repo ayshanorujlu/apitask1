@@ -1,33 +1,46 @@
-﻿using WebApiTask1.Entities;
+﻿using WebApiTask1.Data;
+using WebApiTask1.Entities;
 using WebApiTask1.Repositories.Abstract;
 
 namespace WebApiTask1.Repositories.Concrete
 {
     public class OrderRepository : IOrderRepository
     {
+        private readonly ProductDbContext _context;
+
+        public OrderRepository(ProductDbContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Order entity)
         {
-            throw new NotImplementedException();
+            _context.Orders.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(Order entity)
         {
-            throw new NotImplementedException();
+            _context.Orders.Remove(entity);
+            _context.SaveChanges();
         }
 
         public Order Get(int id)
         {
-            throw new NotImplementedException();
+            var order = _context.Orders.SingleOrDefault(o => o.Id == id);
+            return order;
         }
 
         public IEnumerable<Order> GetAll()
         {
-            throw new NotImplementedException();
+            var orders = _context.Orders;
+            return orders;
         }
 
         public void Update(Order entity)
         {
-            throw new NotImplementedException();
+            _context.Orders.Update(entity);
+            _context.SaveChanges();
         }
     }
 }

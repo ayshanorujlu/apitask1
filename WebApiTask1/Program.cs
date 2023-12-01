@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiTask1.Data;
+using WebApiTask1.Repositories.Abstract;
+using WebApiTask1.Repositories.Concrete;
+using WebApiTask1.Services.Abstract;
+using WebApiTask1.Services.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 var connection = builder.Configuration.GetConnectionString("myconn");
 

@@ -1,4 +1,5 @@
-﻿using WebApiTask1.Entities;
+﻿using WebApiTask1.Data;
+using WebApiTask1.Entities;
 using WebApiTask1.Repositories.Abstract;
 
 namespace WebApiTask1.Repositories.Concrete
@@ -6,29 +7,41 @@ namespace WebApiTask1.Repositories.Concrete
     public class ProductRepository : IProductRepository
 
     {
+        private readonly ProductDbContext _context;
+
+        public ProductRepository(ProductDbContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Product entity)
         {
-            throw new NotImplementedException();
+            _context.Products.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(Product entity)
         {
-            throw new NotImplementedException();
+            _context.Products.Remove(entity);
+            _context.SaveChanges();
         }
 
         public Product Get(int id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.SingleOrDefault(p => p.Id == id);
+            return product;
         }
 
         public IEnumerable<Product> GetAll()
         {
-            throw new NotImplementedException();
+            var products = _context.Products;
+            return products;
         }
 
         public void Update(Product entity)
         {
-            throw new NotImplementedException();
+            _context.Products.Update(entity);
+            _context.SaveChanges();
         }
     }
 }
